@@ -1,28 +1,17 @@
-import { ExecutionContext, SetMetadata } from '@nestjs/common'
-import { Reflector } from '@nestjs/core'
-import 'reflect-metadata'
+import { ExecutionContext, SetMetadata } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import 'reflect-metadata';
 
 export namespace Authentication {
-  const KEY_PUBLIC = 'authentication.public'
-  const KEY_USER_NOT_VERIFIED = 'authentication.user-not-verified'
+  const KEY_PUBLIC = 'authentication.public';
 
-  export const AllowUserNotVerified = () =>
-    SetMetadata(KEY_USER_NOT_VERIFIED, true)
-
-  export function isUserNotVerifiedAllowed(
-    context: ExecutionContext,
-    reflector: Reflector,
-  ): boolean {
-    return getValue(context, reflector, KEY_USER_NOT_VERIFIED)
-  }
-
-  export const Public = () => SetMetadata(KEY_PUBLIC, true)
+  export const Public = () => SetMetadata(KEY_PUBLIC, true);
 
   export function isPublic(
     context: ExecutionContext,
     reflector: Reflector,
   ): boolean {
-    return getValue(context, reflector, KEY_PUBLIC)
+    return getValue(context, reflector, KEY_PUBLIC);
   }
 
   function getValue(
@@ -33,6 +22,6 @@ export namespace Authentication {
     return reflector.getAllAndOverride<boolean>(key, [
       context.getHandler(),
       context.getClass(),
-    ])
+    ]);
   }
 }
